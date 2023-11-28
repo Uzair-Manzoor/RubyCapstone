@@ -49,10 +49,10 @@ puts 'Welcome to the Cataloge of my things'
 
 def print_options
   puts "\nOptions:"
-  puts '3. List of games'
-  puts '6. List all authors'
-  puts '9. Add a game'
-  puts '10. Quit'
+  puts '1. List of games'
+  puts '2. List all authors'
+  puts '3. Add a game'
+  puts '4. Quit'
 end
 
 loop do
