@@ -14,8 +14,3 @@ class Book < Item
     end
 
 end
-
-book1 = Book.new('joy', 'bad')
-book1.cover_state = 'bad'
-book1.can_be_archived
-puts 'bad'
