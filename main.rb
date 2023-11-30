@@ -1,88 +1,34 @@
+require 'json'
 require 'date'
+require './classes/item'
+require './classes/genre'
+require './classes/music_album'
+require './classes/book'
+require './classes/label'
 require './classes/author'
 require './classes/game'
-require_relative 'operations/music_operations'
-require 'json'
+require './operations/book_operations'
+require './operations/music_operations'
+require './operations/game_operations'
+require './operations/file_operations'
+require './operations/item_operations'
 
-# a method to load data from the json files
-def load_from_json(file_name)
-  if File.exist?(file_name)
-    json_data = File.read(file_name)
-    JSON.parse(json_data)
-  else
-    []
-  end
-end
-
-load_music_data_from_file = load_from_json('music.json')
-load_genre_data_from_file = load_from_json('genre.json')
-items = []
-music = load_music_data_from_file
-genres = load_genre_data_from_file
-
-music_operations = MusicOperations.new(music, genres)
-
-music_operations = MusicOperations.new(music, genres)
-book_operations = BookOperations.new(books, label)
-def list_authors(items)
-  puts 'List of all authors:'
-  authors = items.select { |item| item.is_a?(Game) }.map(&:author)
-  puts 'Author list is empty, please add a game first.' if authors.empty?
-  authors.each do |author|
-    puts "Author ID: #{author.id}, First Name: #{author.first_name}, Last Name: #{author.last_name}"
-  end
-end
-
-def list_games(items)
-  puts 'List of all games:'
-  games = list_items(Game, items)
-  puts 'List of games is empty, please add a new game.' if games.empty?
-  games.each_with_index { |game, index| puts "Game ID: #{index + 1}, Title: #{game.title}" }
-end
-
-def add_game(items)
-  puts 'Enter Game Title:'
-  title = gets.chomp
-
-  puts 'Is it Multiplayer? (true/false):'
-  multiplayer = gets.chomp == 'true'
-
-  puts 'Enter the Publish Date (YYYY-MM-DD):'
-  publish_date = Date.parse(gets.chomp)
-
-  puts 'Enter the Last Played Date (YYYY-MM-DD):'
-  last_played_at = Date.parse(gets.chomp)
-
-  puts 'Enter the Author First Name:'
-  first_name = gets.chomp
-
-  puts 'Enter the Author Last Name:'
-  last_name = gets.chomp
-
-  author = Author.new(items.size + 1, first_name, last_name)
-  new_game = Game.new(title, publish_date, multiplayer, last_played_at, author)
-
-  add_item(new_game, items)
-end
+items = load_items_from_json
 
 puts 'Welcome to the Cataloge of my things'
 
 def print_options
-  puts 'Options:'
-  puts '1. List of games'
-  puts '2. List all authors'
-  puts '3. Add a game'
-  puts '4. List all music album'
-  puts '5. Add music album'
-  puts '6. List all genres'
-  puts '7. Create a new genre'
-  puts '8. Quit'
-end
-
-def exit_application
-  puts ''
-  puts 'Exiting the application,thank you!'
-  puts ''
+  puts "\nOptions:"
+  puts '1. List all books'
+  puts '2. List all music albums'
+  puts '3. List of games'
+  puts '4. List all genres'
+  puts '5. List all labels'
+  puts '6. List all authors'
+  puts '7. Add a book'
+  puts '8. Add a music album'
+  puts '9. Add a game'
+  puts '10. Quit'
 end
 
 loop do
@@ -91,21 +37,26 @@ loop do
   choice = gets.chomp.to_i
   case choice
   when 1
-    list_games(items)
+    list_books(items)
   when 2
-    list_authors(items)
+    list_music_albums(items)
   when 3
-    add_game(items)
+    list_games(items)
   when 4
-    music_operations.list_all_music_albums
+    list_genres(items)
   when 5
-    music_operations.add_music_album
+    list_labels(items)
   when 6
-    music_operations.list_all_genres
+    list_authors(items)
   when 7
-    music_operations.create_genre
+    add_book(items)
   when 8
-    exit_application
+    add_music_album(items)
+  when 9
+    add_game(items)
+  when 10
+    save_items_to_json(items)
+    puts 'Exiting the application. Goodbye!'
     break
   else
     puts 'Invalid choice. Please try again.'
