@@ -1,7 +1,7 @@
 require 'date' # Require the Date class
 
 class Item
-  attr_accessor :id, :source, :label
+  attr_accessor :id, :source, :label, :genre
   attr_reader :archived
 
   def initialize(archived, publish_date)
@@ -13,6 +13,7 @@ class Item
   # a method that returns true if published date is older than 10 years
   def can_be_archived?
     return false unless publish_date
+
     current_date = Date.today
     time_to_be_archived = current_date.year - @publish_date.year
     time_to_be_archived > 10
@@ -23,7 +24,7 @@ class Item
   end
 
   # a setter method for genre items does not include the genre
-  def genre=(genre)
+  def genres=(genre)
     @genre = genre
     @genre.items.push(self) unless @genre.items.include?(self)
   end

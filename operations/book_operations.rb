@@ -3,14 +3,15 @@ require_relative '../classes/label'
 require 'json'
 
 class BookOperations
-    attr_accessor :books, :label
-    def initialize(books, label)
-        @books = books
-        @label = label
-    end
+  attr_accessor :books, :label
 
-    #method to add new book
-    def add_new_book
+  def initialize(books, label)
+    @books = books
+    @label = label
+  end
+
+  # method to add new book
+  def add_new_book
     puts 'Add a new book'
     puts ''
     puts 'Enter the publisher of book?'
@@ -25,13 +26,14 @@ class BookOperations
     puts 'Enter date of publishing the book Format("YYYY-MM-DD)'
     publish_date = gets.chomp
     added_book = Book.new(publisher, cover_state, archived, publish_date)
-    books.push({ id: added_book.id, publisher: added_book.publisher, cover_state: added_book.cover_state, archived: added_book.archived, publish_date: added_book.publish_date })
+    books.push({ id: added_book.id, publisher: added_book.publisher, cover_state: added_book.cover_state,
+                 archived: added_book.archived, publish_date: added_book.publish_date })
     save_json_data('books.json', books)
     puts 'New Book added successfully'
-    end
+  end
 
-    #method to list all books
-    def list_all_books
+  # method to list all books
+  def list_all_books
     puts 'Lists all books'
     if books.empty?
       puts 'No books added yet'
@@ -61,9 +63,9 @@ class BookOperations
     label.push({ id: added_label.id, title: added_label.title, color: added_label.color })
     save_json_data('label.json', label)
     puts 'New label added successfully'
-    end
+  end
 
-    def list_all_labels
+  def list_all_labels
     puts 'Lists all labels'
     if label.empty?
       puts 'No labels added yet'
@@ -71,8 +73,8 @@ class BookOperations
     else
       label.each do |item|
         puts "id:#{item['id'] || item[:id]}"
-        puts "title:#{item['title'] || item['title']}"
-        puts "color:#{item['color'] || item['color']}"
+        puts "title:#{item['title'] || item[:title]}"
+        puts "color:#{item['color'] || item[:color]}"
         puts ''
       end
     end
@@ -82,5 +84,5 @@ class BookOperations
     File.open(file_name, 'w') do |file|
       file.puts JSON.pretty_generate(array_object)
     end
-end
+  end
 end

@@ -111,9 +111,9 @@ loop do
     music_operations.list_all_genres
   when 7
     music_operations.create_genre
-  when 8 
+  when 8
     book_operations.list_all_books
-  when 9 
+  when 9
     book_operations.add_new_book
   when 10
     book_operations.list_all_labels
