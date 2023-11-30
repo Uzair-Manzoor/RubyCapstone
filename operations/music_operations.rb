@@ -24,6 +24,7 @@ class MusicOperations
     added_album = MusicAlbum.new(archived, publish_date, on_spotify)
     music.push({ id: added_album.id, archived: added_album.archived, publish_date: added_album.publish_date })
     save_json_data('music.json', music)
+    puts ''
     puts 'music album added successfully'
   end
 
@@ -54,7 +55,7 @@ class MusicOperations
     genres.push({ id: added_genre.id, name: added_genre.name })
     save_json_data('genre.json', genres)
     puts ''
-    puts 'Genre added successfully'
+    puts 'music album added successfully'
   end
 
   # a method to list all genres

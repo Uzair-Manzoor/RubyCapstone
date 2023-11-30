@@ -2,7 +2,6 @@ require 'date'
 require './classes/author'
 require './classes/game'
 require_relative 'operations/music_operations'
-require_relative 'operations/book_operations'
 require 'json'
 
 # a method to load data from the json files
@@ -17,13 +16,11 @@ end
 
 load_music_data_from_file = load_from_json('music.json')
 load_genre_data_from_file = load_from_json('genre.json')
-load_books_data_from_file = load_from_json('books.json')
-load_label_data_from_file = load_from_json('label.json')
 items = []
-books = load_books_data_from_file
-label = load_label_data_from_file
 music = load_music_data_from_file
 genres = load_genre_data_from_file
+
+music_operations = MusicOperations.new(music, genres)
 
 music_operations = MusicOperations.new(music, genres)
 book_operations = BookOperations.new(books, label)
@@ -79,11 +76,7 @@ def print_options
   puts '5. Add music album'
   puts '6. List all genres'
   puts '7. Create a new genre'
-  puts '8. List all books'
-  puts '9. Add a new book'
-  puts '10. List all labels'
-  puts '11. Add a new label '
-  puts '12. Quit'
+  puts '8. Quit'
 end
 
 def exit_application
@@ -111,15 +104,7 @@ loop do
     music_operations.list_all_genres
   when 7
     music_operations.create_genre
-  when 8 
-    book_operations.list_all_books
-  when 9 
-    book_operations.add_new_book
-  when 10
-    book_operations.list_all_labels
-  when 11
-    book_operations.add_new_label
-  when 12
+  when 8
     exit_application
     break
   else
