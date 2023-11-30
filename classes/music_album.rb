@@ -1,7 +1,11 @@
-require './item'
+require_relative 'item'
+
 class MusicAlbum < Item
-  def initialize(on_spotify)
-    super(genre, source, label, publish_date)
+  attr_reader :id, :publish_date, :archived
+
+  def initialize(archived, publish_date, on_spotify)
+    super(archived, publish_date)
+    @id = id
     @on_spotify = on_spotify
   end
 

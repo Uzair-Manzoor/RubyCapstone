@@ -1,8 +1,26 @@
 require 'date'
 require './classes/author'
 require './classes/game'
+require_relative 'operations/music_operations'
+require 'json'
 
+# a method to load data from the json files
+def load_from_json(file_name)
+  if File.exist?(file_name)
+    json_data = File.read(file_name)
+    JSON.parse(json_data)
+  else
+    []
+  end
+end
+
+load_music_data_from_file = load_from_json('music.json')
+load_genre_data_from_file = load_from_json('genre.json')
 items = []
+music = load_music_data_from_file
+genres = load_genre_data_from_file
+
+music_operations = MusicOperations.new(music, genres)
 
 def list_authors(items)
   puts 'List of all authors:'
@@ -50,24 +68,8 @@ puts 'Welcome to the Cataloge of my things'
 def print_options
   puts "\nOptions:"
   puts '1. List of games'
-  puts '2. List all authors'
-  puts '3. Add a game'
-  puts '4. Quit'
-end
-
-loop do
-  print_options
-  print 'Enter your choice: '
-  choice = gets.chomp.to_i
-  case choice
-  when 1
-    list_games(items)
-  when 2
-    list_authors(items)
-  when 3
-    add_game(items)
-    break
-  else
-    puts 'Invalid choice. Please try again.'
-  end
+  puts '2. List all genres'
+  puts '3. List all labels'
+  puts '4. Add a game'
+  puts '5. Quit'
 end

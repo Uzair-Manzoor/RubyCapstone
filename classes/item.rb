@@ -1,10 +1,10 @@
 require 'date' # Require the Date class
 
 class Item
-  attr_accessor  :archived, :label, :author, :source, :genre, :publish_date
-  attr_reader :id
+  attr_accessor :id, :source, :label
+  attr_reader :archived
 
-  def initialize(archived:false, publish_date: nil)
+  def initialize(archived, publish_date)
     @id = Random.rand(1..1000)
     @archived = archived
     @publish_date = Date.parse(publish_date) if publish_date
@@ -19,7 +19,13 @@ class Item
   end
 
   def move_to_archive
-    @archived = can_be_archived?
+    @rchived = can_be_archived?
+  end
+
+  # a setter method for genre items does not include the genre
+  def genre=(genre)
+    @genre = genre
+    @genre.items.push(self) unless @genre.items.include?(self)
   end
 end
 

@@ -1,6 +1,6 @@
 class Author
-  attr_reader :id, :first_name, :last_name
-  attr_accessor :items
+  attr_accessor :first_name, :last_name, :items
+  attr_reader :id
 
   def initialize(id, first_name, last_name)
     @id = id
