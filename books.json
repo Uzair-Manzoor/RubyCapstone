@@ -5,5 +5,12 @@
     "cover_state": "good",
     "archived": "true",
     "publish_date": "2023-01-13"
+  },
+  {
+    "id": 859,
+    "publisher": "Bola Akinniran",
+    "cover_state": "Bad",
+    "archived": "true",
+    "publish_date": "2022-01-14"
   }
 ]
