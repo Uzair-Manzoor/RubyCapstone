@@ -27,4 +27,6 @@ item1 = Item.new(archived: true, publish_date: '2022-01-13')
 puts 'code executed successfully'
 item1.move_to_archive
 puts 'false, it is less than 10'
+item.archived
+puts 'archived'
 # item1 = Item.new(true, '2022-01-13')
