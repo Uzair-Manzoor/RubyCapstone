@@ -1,10 +1,11 @@
 require 'date' # Require the Date class
 
 class Item
-  attr_accessor :id, :genre, :source, :label
+  attr_accessor :id, :source, :label
   attr_reader :archived
 
-  def initialize(genre, source, archived, label, publish_date)
+
+  def initialize(archived,publish_date)
     @id = Random.rand(1..1000)
     @genre = genre
     @source = source
@@ -23,4 +24,13 @@ class Item
   def move_to_archive
     @rchived = can_be_archived?
   end
+ 
+  # a setter method for genre items does not include the genre
+  def genre=(genre)
+    @genre = genre
+    @genre.items.push(self) unless @genre.items.include?(self)
+  end
 end
+
+
+
