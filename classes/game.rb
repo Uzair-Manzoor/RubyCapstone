@@ -1,4 +1,4 @@
-class Game < Item
+class Game
   attr_accessor :multiplayer, :last_played_at, :author
 
   def initialize(title, publish_date, multiplayer, last_played_at, author)
