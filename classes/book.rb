@@ -10,8 +10,12 @@ class Book < Item
     end
 
     def can_be_archived?
-    super || cover_state === 'bad'
+    super || cover_state == 'bad'
     end
 
 end
 
+book1 = Book.new('joy', 'bad')
+book1.cover_state = 'bad'
+book1.can_be_archived
+puts 'bad'
