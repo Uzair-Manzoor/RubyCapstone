@@ -1,3 +1,21 @@
+CREATE DATABASE CatalogOfThings;
+USE CatalogOfMyThings;
+
+CREATE TABLE item (
+    id INT PRIMARY KEY,
+    title VARCHAR(255),
+    publish_date DATE,
+    publisher VARCHAR(255),
+    cover_state VARCHAR(255)
+    archived BOOLEAN,
+    label_id INT, -- Add a foreign key for the label (one-to-many relationship)
+    genre_id INT, -- Add a foreign key for the genre (one-to-many relationship)
+    author_id INT, -- Add a foreign key for the author (one-to-many relationship)
+    FOREIGN KEY (label_id) REFERENCES labels (id)  
+    FOREIGN KEY (genre_id) REFERENCES genres (id),
+    FOREIGN KEY (author_id) REFERENCES authors (id),
+);
+
 --create music album table--
 CREATE TABLE MUSIC_ALBUM_(
     ID INTEGER PRIMARY KEY,
