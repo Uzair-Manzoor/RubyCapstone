@@ -1,26 +1,38 @@
-require 'date' # Require the Date class
-
 class Item
-  attr_accessor :id, :genre, :source, :label
-  attr_reader :archived
+  attr_accessor :title, :publish_date
+  attr_reader :id, :archived
 
-  def initialize(genre, source, archived, label, publish_date)
-    @id = Random.rand(1..1000)
-    @genre = genre
-    @source = source
-    @label = label
-    @archived = archived
+  def initialize(id, title, publish_date)
+    @id = id
+    @title = title
     @publish_date = publish_date
+    @archived = false
   end
 
-  # a method that returns true if published date is older than 10 years
   def can_be_archived?
-    current_date = Date.today
-    time_to_be_archived = current_date.year - @publish_date.year
-    time_to_be_archived > 10
+    return false if @publish_date.nil?
+
+    return true if (Date.today - @publish_date.to_date).to_i > 3650
+
+    false
   end
 
   def move_to_archive
-    @rchived = can_be_archived?
+    @archived = can_be_archived?
+  end
+
+  def add_label(label)
+    @label = label
+    label.add_item(self)
+  end
+
+  def add_genre(genre)
+    @genre = genre
+    genre.add_item(self)
+  end
+
+  def add_author(author)
+    @author = author
+    author.add_item(self)
   end
 end
