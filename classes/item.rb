@@ -1,7 +1,7 @@
 require 'date' # Require the Date class
 
 class Item
-  attr_accessor :id, :source, :label, :genre
+  attr_accessor :id, :source, :label, :genre, :publish_date
   attr_reader :archived
 
   def initialize(archived, publish_date)
@@ -20,7 +20,7 @@ class Item
   end
 
   def move_to_archive
-    @rchived = can_be_archived?
+    @archived = can_be_archived?
   end
 
   # a setter method for genre items does not include the genre
