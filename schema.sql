@@ -52,9 +52,11 @@ CREATE TABLE authors (
   last_name VARCHAR(255)
 );
 
-CREATE TABLE books (
-    publisher VARCHAR(100),
-    cover_state VARCHAR(100),
+CREATE TABLE book(
+	id INT NOT NULL,
+	publisher VARCHAR(255),
+	cover_state VARCHAR(255),
+	FOREIGN KEY (id) REFERENCES item (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE labels (
