@@ -1,17 +1,26 @@
-require_relative 'item'
-
 class MusicAlbum < Item
-  attr_reader :id, :publish_date, :archived
+  attr_reader :on_spotify
 
-  def initialize(archived, publish_date, on_spotify)
-    super(archived, publish_date)
-    @id = id
+  def initialize(id, title, publish_date, on_spotify)
+    super(id, title, publish_date)
     @on_spotify = on_spotify
   end
 
-  # a method to override the default can_be_archived mrthod inthe parent class
-  # and return true if the can_be_archived is true and on_spotify is true else false
   def can_be_archived?
-    super.can_be_archived? && @on_spotify
+    !@archived && @on_spotify
+  end
+
+  def to_json(*_args)
+    {
+      'class_name' => 'MusicAlbum',
+      'id' => id,
+      'title' => title,
+      'publish_date' => publish_date,
+      'on_spotify' => on_spotify
+    }
+  end
+
+  def self.from_json(data)
+    MusicAlbum.new(data['id'], data['title'], data['publish_date'], data['on_spotify'])
   end
 end

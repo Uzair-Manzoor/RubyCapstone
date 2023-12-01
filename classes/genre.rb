@@ -1,15 +1,26 @@
 class Genre
-  attr_accessor :name, :items
-  attr_reader :id
+  attr_reader :id, :name
+  attr_accessor :items
 
-  def initialize(name)
-    @id = rand(1..1000)
+  def initialize(id, name)
+    @id = id
     @name = name
     @items = []
   end
 
   def add_item(item)
     @items << item
-    item.genre = self
+  end
+
+  def to_json(*_args)
+    {
+      'class_name' => 'Genre',
+      'id' => id,
+      'name' => name
+    }
+  end
+
+  def self.from_json(data)
+    Genre.new(data['id'], data['name'])
   end
 end
