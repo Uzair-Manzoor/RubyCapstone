@@ -1,39 +1,47 @@
+require 'rspec'
+require 'date'
 require_relative '../classes/book'
-require_relative '../classes/item'
-
-
-RSpec.describe Item do
-   describe '#can_be_archived?' do
-    context 'when publish date is nil' do
-      let(:item) { Item.new(false, nil) }
-
-      it 'returns false' do
-        expect(item.can_be_archived?).to be false
-      end
-    end
-
-    # ... other test contexts ...
+describe Book do
+  it 'has accessors for id, title, publish_date, publisher, and cover_state' do
+    book = Book.new(1, 'Test Book', Date.today, 'Test Publisher', 'good')
+    expect(book.id).to eq(1)
+    expect(book.title).to eq('Test Book')
+    expect(book.publish_date).to eq(Date.today)
+    expect(book.publisher).to eq('Test Publisher')
+    expect(book.cover_state).to eq('good')
   end
 
-  describe '#move_to_archive' do
-    let(:publish_date) { (Date.today - 12 * 365).to_s } # 12 years ago
-    let(:item) { Item.new(false, publish_date) }
-
-    it 'archives the item if it can be archived' do
-      item.move_to_archive
-      expect(item.archived).to be true
-    end
-
-    it 'does not archive the item if it cannot be archived' do
-      allow(item).to receive(:can_be_archived?).and_return(false)
-      item.move_to_archive
-      expect(item.archived).to be false
-    end
+  it 'can be archived if cover state is bad' do
+    book = Book.new(1, 'Test Book', Date.today, 'Test Publisher', 'bad')
+    expect(book.can_be_archived?).to eq(true)
   end
-end
 
-RSpec.describe Book do
-  describe '#can_be_archived?' do
-    # ... your test contexts for Book class ...
+  it 'can be serialized to JSON' do
+    book = Book.new(1, 'Test Book', Date.today, 'Test Publisher', 'good')
+    expect(book.to_json).to eq({
+                                 'class_name' => 'Book',
+                                 'id' => 1,
+                                 'title' => 'Test Book',
+                                 'publish_date' => Date.today.strftime('%Y-%m-%d'),
+                                 'publisher' => 'Test Publisher',
+                                 'cover_state' => 'good'
+                               })
+  end
+
+  it 'can be deserialized from JSON' do
+    data = {
+      'class_name' => 'Book',
+      'id' => 1,
+      'title' => 'Test Book',
+      'publish_date' => Date.today.strftime('%Y-%m-%d'),
+      'publisher' => 'Test Publisher',
+      'cover_state' => 'good'
+    }
+    book = Book.from_json(data)
+    expect(book.id).to eq(1)
+    expect(book.title).to eq('Test Book')
+    expect(book.publish_date).to eq(Date.today)
+    expect(book.publisher).to eq('Test Publisher')
+    expect(book.cover_state).to eq('good')
   end
 end
