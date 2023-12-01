@@ -37,15 +37,12 @@ CREATE TABLE IF NOT EXISTS GENRE(
 
 -- Create the games table
 CREATE TABLE games (
-  id INT PRIMARY KEY,
-  item_id INT, -- A foreign key to reference the parent item table
-  title VARCHAR(255),
-  publish_date DATE,
-  multiplayer BOOLEAN,
-  last_played_at DATE,
-  archived BOOLEAN DEFAULT false,
-  author_id INT, -- Add a foreign key for the author (one-to-many relationship)
-  FOREIGN KEY (author_id) REFERENCES authors (id)
+CREATE TABLE game(
+	id INT NOT NULL,
+	multiplayer BOOLEAN,
+	last_played_at DATE,
+	FOREIGN KEY (id) REFERENCES item (id)
+);
 );
 
 -- Create the authors table
