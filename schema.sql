@@ -31,3 +31,15 @@ CREATE TABLE authors (
   first_name VARCHAR(255),
   last_name VARCHAR(255)
 );
+
+CREATE TABLE books (
+    publisher VARCHAR(100),
+    cover_state VARCHAR(100),
+);
+
+CREATE TABLE labels (
+    id  INT GENERATED ALWAYS AS IDENTITY,
+    title VARCHAR(100),
+    color VARCHAR(100),
+    PRIMARY KEY(id)
+);
