@@ -40,6 +40,9 @@ Ruby, Visual Studia Code, WSL
   <summary>WSL</summary>
 </details>
 
+### Demo Link
+- **[Video Presentation](https://drive.google.com/file/d/1IcTH_GTSqDpVecmrXgxGk5VzPML29w6J/view)**
+
 ### Key Features <a name="key-features"></a>
 
 - **[Item Management]**
