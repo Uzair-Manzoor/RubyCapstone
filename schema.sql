@@ -17,30 +17,32 @@ CREATE TABLE item (
 );
 
 --create music album table--
-CREATE TABLE MUSIC_ALBUM_(
-    ID INTEGER PRIMARY KEY,
-    ON_SPOTIFY BOOLEAN,
-    ARCHIVED BOOLEAN
-    PUBLISH_DATE DATE
+CREATE TABLE music_album(
+	id INT NOT NULL,
+	on_spotify BOOLEAN,
+	FOREIGN KEY (id) REFERENCES item (id)
+);
+    GENRE VARCHAR(100) REFERENCES GENRE(NAME),
+    AUTHOR VARCHAR(100) REFERENCES authors(first_name),
+    LABEL VARCHAR(100) REFERENCES labels(TITLE),
 )
 
 --Create Genre table--
-CREATE TABLE IF NOT EXISTS GENRE (
-    ID INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS GENRE(
+    ID INTEGER,
     NAME CHAR(32) NOT NULL,
+    ITEMS INT REFERENCES (books, MUSIC_ALBUM, games),
+    PRIMARY KEY(ID, items)
 )
 
 -- Create the games table
 CREATE TABLE games (
-  id INT PRIMARY KEY,
-  item_id INT, -- A foreign key to reference the parent item table
-  title VARCHAR(255),
-  publish_date DATE,
-  multiplayer BOOLEAN,
-  last_played_at DATE,
-  archived BOOLEAN DEFAULT false,
-  author_id INT, -- Add a foreign key for the author (one-to-many relationship)
-  FOREIGN KEY (author_id) REFERENCES authors (id)
+CREATE TABLE game(
+	id INT NOT NULL,
+	multiplayer BOOLEAN,
+	last_played_at DATE,
+	FOREIGN KEY (id) REFERENCES item (id)
+);
 );
 
 -- Create the authors table
@@ -50,9 +52,11 @@ CREATE TABLE authors (
   last_name VARCHAR(255)
 );
 
-CREATE TABLE books (
-    publisher VARCHAR(100),
-    cover_state VARCHAR(100),
+CREATE TABLE book(
+	id INT NOT NULL,
+	publisher VARCHAR(255),
+	cover_state VARCHAR(255),
+	FOREIGN KEY (id) REFERENCES item (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE labels (
